@@ -24,6 +24,38 @@ def game_over(board, index):
     exit()
 
 
+def is_row_winner(board, row_number):
+    if row_number == 1:
+        if board[0] == board[1] and board[1] == board[2]:
+            return True
+    elif row_number == 2:
+        if board[3] == board[4] and board[4] == board[5]:
+            return True
+    elif row_number == 3:
+        if board[6] == board[7] and board[7] == board[8]:
+            return True
+
+
+def is_column_winner(board, column_number):
+    if column_number == 1:
+        if board[0] == board[3] and board[3] == board[6]:
+            return True
+    elif column_number == 2:
+        if board[1] == board[4] and board[4] == board[7]:
+            return True
+    elif board[2] == board[5] and board[5] == board[8]:
+        return True
+
+
+def is_diagonal_winner(board, side):
+    if side == "left":
+        if board[0] == board[4] and board[4] == board[8]:
+            return True
+    if side == "right":
+        if board[2] == board[4] and board[4] == board[6]:
+            return True
+
+
 board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 current_player = "X"
 
@@ -33,21 +65,21 @@ for move_number in range(1, 10):
     space_number = int(response) - 1
     board[space_number] = current_player
 
-    if board[0] == board[1] and board[1] == board[2]:
+    if is_row_winner(board, 1):
         game_over(board, 0)
-    elif board[3] == board[4] and board[4] == board[5]:
+    elif is_row_winner(board, 2):
         game_over(board, 3)
-    elif board[6] == board[7] and board[7] == board[8]:
+    elif is_row_winner(board, 3):
         game_over(board, 6)
-    elif board[0] == board[3] and board[3] == board[6]:
+    elif is_column_winner(board, 1):
         game_over(board, 0)
-    elif board[1] == board[4] and board[4] == board[7]:
+    elif is_column_winner(board, 2):
         game_over(board, 1)
-    elif board[2] == board[5] and board[5] == board[8]:
+    elif is_column_winner(board, 3):
         game_over(board, 2)
-    elif board[0] == board[4] and board[4] == board[8]:
+    elif is_diagonal_winner(board, "left"):
         game_over(board, 0)
-    elif board[2] == board[4] and board[4] == board[6]:
+    elif is_diagonal_winner(board, "right"):
         game_over(board, 2)
 
     if current_player == "X":
